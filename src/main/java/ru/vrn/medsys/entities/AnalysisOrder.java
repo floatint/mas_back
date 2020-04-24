@@ -13,12 +13,13 @@ public class AnalysisOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "analysis_order_id")
     private Long id;
-    @ElementCollection
+    //@ElementCollection
     //@CollectionTable(name = "analyses", joinColumns = @JoinColumn(name = "analysis_id"))
     //private Collection<Analysis> analyses;
+    private Analysis analysis;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
-    private Client customer;
+    @JoinColumn(name = "user_id")
+    private User customer;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User executor;
