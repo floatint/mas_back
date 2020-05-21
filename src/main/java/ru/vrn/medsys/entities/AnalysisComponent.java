@@ -19,9 +19,11 @@ public class AnalysisComponent {
     private Long id;
     @Column
     private String name;
-
+    @Column
     private String strValue;
+    @Column
     private BigDecimal decValue;
-    //@ManyToMany(mappedBy = "components")
-    //private Collection<Analysis> analyses;
+    @ManyToOne
+    @JoinColumn(name = "analysis_order_id", nullable = false)
+    private AnalysisOrder order;
 }

@@ -28,6 +28,12 @@ public class User {
                inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Collection<Role> roles;
 
+    @OneToMany(mappedBy = "customer")
+    private Collection<AnalysisOrder> customer_orders;
+
+    @OneToMany(mappedBy = "executor")
+    private Collection<AnalysisOrder> executor_orders;
+
     //@Override
     //public String toString() {
     //    return this.getClass().getSimpleName() + "-" + getId();
