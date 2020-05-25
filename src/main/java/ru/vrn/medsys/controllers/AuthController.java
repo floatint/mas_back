@@ -4,6 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import ru.vrn.medsys.entities.Role;
 import ru.vrn.medsys.entities.SecurityUserDetails;
@@ -15,7 +18,9 @@ import ru.vrn.medsys.repositories.RoleRepository;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/auth")
@@ -37,8 +42,8 @@ public class AuthController {
     //@Secured(value = {"ROLE_CLIENT", "ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<UserDto> signIn(Principal p){
-        Optional<User> user = usersService.findByEmail(p.getName());
-        return ResponseEntity.ok(mapper.map(user.get(), UserDto.class));
+        SecurityUserDetails userDetails = (SecurityUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ResponseEntity.ok(mapper.map(userDetails, UserDto.class));
     }
 
     @PostMapping("/sign-up")
