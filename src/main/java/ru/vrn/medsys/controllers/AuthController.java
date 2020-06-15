@@ -43,7 +43,7 @@ public class AuthController {
         this.mapper = mapper;
     }
 
-    @PostMapping("/sign-in")
+    @RequestMapping(value = "/sign-in", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     @ApiOperation(value = "Вход в систему", response = UserDto.class)
     @ApiResponses(value = {
@@ -57,7 +57,7 @@ public class AuthController {
         return ResponseEntity.ok(mapper.map(userDetails, UserDto.class));
     }
 
-    @PostMapping("/sign-up")
+    @RequestMapping(value = "/sign-up", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     @ApiOperation(value = "Регистрация в системе", response = UserDto.class)
     @ApiResponses(value = {

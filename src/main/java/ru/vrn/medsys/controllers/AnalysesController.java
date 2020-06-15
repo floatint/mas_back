@@ -31,9 +31,9 @@ public class AnalysesController {
         mapper = modelMapper;
     }
 
-    @GetMapping
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    @ApiOperation(value = "Получить список всех анализов", response = Iterable.class)
+    @ApiOperation(value = "Получить список всех анализов", response = AnalysisDto.class, responseContainer = "List")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Список анализов"),
             @ApiResponse(code = 500, message = "Ошибка сервера")
@@ -44,7 +44,7 @@ public class AnalysesController {
         return ResponseEntity.ok(mapper.map(analysesService.findAll(), responseListType));
     }
 
-    @GetMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     @ApiOperation(value = "Получить анализ по id", response = AnalysisDto.class)
     @ApiResponses(value = {
@@ -60,7 +60,7 @@ public class AnalysesController {
         return ResponseEntity.ok(mapper.map(analysis.get(), AnalysisDto.class));
     }
 
-    @PostMapping
+    @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     @ApiOperation(value = "Добавить новый анализ", response = AnalysisDto.class)
     @ApiResponses(value = {
@@ -74,7 +74,7 @@ public class AnalysesController {
     }
 
 
-    @PutMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
     @ResponseBody
     @ApiOperation(value = "Изменить анализ", response = AnalysisDto.class)
     @ApiResponses(value = {
@@ -93,7 +93,7 @@ public class AnalysesController {
         return ResponseEntity.ok(mapper.map(analysesService.save(tmp), AnalysisDto.class));
     }
 
-    @DeleteMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
     @ResponseBody
     @ApiOperation(value = "Удалить анализ", response = AnalysisDto.class)
     @ApiResponses(value = {

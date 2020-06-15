@@ -33,9 +33,9 @@ public class UsersController {
         mapper = modelMapper;
     }
 
-    @GetMapping
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    @ApiOperation(value = "Получить список всех пользователей", response = Iterable.class)
+    @ApiOperation(value = "Получить список всех пользователей", response = UserDto.class, responseContainer = "List")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Список пользователей"),
             @ApiResponse(code = 401, message = "Недостаточно прав для выполнения"),
@@ -46,7 +46,7 @@ public class UsersController {
         return ResponseEntity.ok(mapper.map(usersService.findAll(), responseCollectionType));
     }
 
-    @GetMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     @ApiOperation(value = "Получить пользователя по id", response = UserDto.class)
     @ApiResponses(value = {
@@ -63,7 +63,7 @@ public class UsersController {
         return ResponseEntity.ok(mapper.map(userOp.get(), UserDto.class));
     }
 
-    @PostMapping
+    @RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     @ApiOperation(value = "Добавить нового пользователя", response = UserDto.class)
     @ApiResponses(value = {
@@ -86,7 +86,7 @@ public class UsersController {
         return ResponseEntity.ok(mapper.map(user, UserDto.class));
     }
 
-    @PutMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
     @ResponseBody
     @ApiOperation(value = "Изменить данные пользователя", response = UserDto.class)
     @ApiResponses(value = {
@@ -105,7 +105,7 @@ public class UsersController {
         return ResponseEntity.ok(mapper.map(usersService.save(tmpUser), UserDto.class));
     }
 
-    @DeleteMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
     @ResponseBody
     @ApiOperation(value = "Удалить пользователя", response = UserDto.class)
     @ApiResponses(value = {
