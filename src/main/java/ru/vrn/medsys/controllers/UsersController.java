@@ -22,7 +22,7 @@ import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("api/users")
-@Api(value = "analyses", description = "Контроллер анализов")
+@Api(value = "users", description = "Контроллер пользователей")
 public class UsersController {
     private final UsersService usersService;
     private final ModelMapper mapper;
@@ -48,7 +48,7 @@ public class UsersController {
 
     @GetMapping("/{id}")
     @ResponseBody
-    @ApiOperation(value = "Получить список всех пользователей", response = UserDto.class)
+    @ApiOperation(value = "Получить пользователя по id", response = UserDto.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Пользователь с заданным id"),
             @ApiResponse(code = 401, message = "Недостаточно прав для выполнения"),
