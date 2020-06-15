@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,11 +36,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/analyses/").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/analyses").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/orders").hasAuthority("ROLE_CLIENT")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
                 .authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint());
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v2/api-docs",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/security",
+                "/swagger-ui.html",
+                "/webjars/**");
     }
     //unauthorized api
     /*@Override

@@ -27,4 +27,6 @@ public class Analysis {
     //@JoinTable(name = "analysis_component",joinColumns = @JoinColumn(name = "analysis_id", referencedColumnName = "analysis_id"),
     //        inverseJoinColumns = @JoinColumn(name = "component_id", referencedColumnName = "component_id"))
     //private Collection<AnalysisComponent> components;
+    @OneToMany(mappedBy = "analysis", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Collection<AnalysisOrder> orders;
 }

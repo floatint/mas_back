@@ -1,5 +1,6 @@
 package ru.vrn.medsys.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class AnalysisComponent {
     private String strValue;
     @Column
     private BigDecimal decValue;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "analysis_order_id", nullable = false)
     private AnalysisOrder order;
