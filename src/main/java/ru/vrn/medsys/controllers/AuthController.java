@@ -1,5 +1,9 @@
 package ru.vrn.medsys.controllers;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +28,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/auth")
+@Api(value = "auth", description = "Контроллер авторизации")
 public class AuthController {
 
     private final UsersService usersService;
@@ -39,8 +44,14 @@ public class AuthController {
     }
 
     @PostMapping("/sign-in")
-    //@Secured(value = {"ROLE_CLIENT", "ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
+    @ApiOperation(value = "Вход в систему", response = UserDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Вход выполнен успешно"),
+            @ApiResponse(code = 401, message = "Не удалось выполнить вход"),
+            @ApiResponse(code = 500, message = "Ошибка сервера")
+    }
+    )
     public ResponseEntity<UserDto> signIn(Principal p){
         SecurityUserDetails userDetails = (SecurityUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ResponseEntity.ok(mapper.map(userDetails, UserDto.class));
@@ -48,6 +59,14 @@ public class AuthController {
 
     @PostMapping("/sign-up")
     @ResponseBody
+    @ApiOperation(value = "Регистрация в системе", response = UserDto.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Регистрация выполнена успешно"),
+            @ApiResponse(code = 400, message = "Пользователь с таким email сущетсвует"),
+            @ApiResponse(code = 500, message = "Ошибка сервера")
+
+    }
+    )
     public ResponseEntity<UserDto> signUp(@RequestBody NewUserDto newUser){
 
         //check if login already exists
